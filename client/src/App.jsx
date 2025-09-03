@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import PropertyDetail from "./pages/PropertyDetail";
 import Dashboard from "./pages/Dashboard";
 import Chat from "./pages/Chat";
+import SellerChatList from "./pages/SellerChatList";
 import "./styles.css";
 
 export default function App() {
@@ -30,8 +31,9 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/property/:id" element={<PropertyDetail />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/seller/inbox" element={<SellerChatList />} />
         <Route path="/chat/:id" element={<Chat />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }

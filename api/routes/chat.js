@@ -16,8 +16,33 @@ router.post("/conversation", auth, async (req, res) => {
 });
 
 router.get("/conversations", auth, async (req, res) => {
-  const convos = await Conversation.find({ members: req.user.id }).populate("property", "title");
-  res.json(convos);
+  try {
+    const { propertyId } = req.query;
+
+    // Only fetch conversations where the current user is a member
+    let filter = { members: req.user.id };
+    if (propertyId) filter.property = propertyId;
+
+    const convos = await Conversation.find(filter)
+      .populate("members", "name role") // get buyer/seller info
+      .populate("property", "title");   // get property info
+
+    // Get last message for each conversation
+    const convosWithLastMsg = await Promise.all(
+      convos.map(async (c) => {
+        const lastMsg = await Message.find({ conversation: c._id })
+          .sort({ createdAt: -1 })
+          .limit(1)
+          .populate("sender", "name role");
+        return { ...c.toObject(), lastMessage: lastMsg[0] || null };
+      })
+    );
+
+    res.json(convosWithLastMsg);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 router.post("/message", auth, async (req, res) => {
@@ -32,7 +57,7 @@ router.get("/messages", auth, async (req, res) => {
   if (!conversationId) return res.status(400).json({ error: "Missing conversationId" });
   const filter = { conversation: conversationId };
   if (since) filter.createdAt = { $gt: new Date(since) };
-  const msgs = await Message.find(filter).sort("createdAt");
+  const msgs = await Message.find(filter).sort("createdAt").populate("sender", "name");
   res.json(msgs);
 });
 
