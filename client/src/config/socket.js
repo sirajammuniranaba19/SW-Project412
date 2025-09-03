@@ -4,7 +4,7 @@ let socket;
 
 export const initSocket = (token) => {
   if (!socket) {
-    socket = io("http://localhost:8800", {
+    socket = io(import.meta.env.VITE_API_URL, {
       auth: { token }, // JWT sent here
     });
   }

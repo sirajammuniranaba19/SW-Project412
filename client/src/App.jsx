@@ -13,26 +13,55 @@ import Dashboard from "./pages/Dashboard";
 import Chat from "./pages/Chat";
 import SellerChatList from "./pages/SellerChatList";
 import "./styles.css";
+import { getAuth, logout } from "./auth";
 
 export default function App() {
+  const auth = getAuth();
+
   return (
     <BrowserRouter>
       {/* Navbar */}
       <header className="app-header">
         <div className="inner">
           {/* Brand: bigger + gradient color */}
-          <Link to="/" className="brand brand--lg brand--gradient">SHIRE HOMES</Link>
+          <Link to="/" className="brand brand--lg brand--gradient">
+            SHIRE HOMES
+          </Link>
 
           {/* Colored buttons */}
           <nav className="nav-links">
-            <Link to="/buy"      className="nav-btn nav-btn--buy">Buy</Link>
-            <Link to="/rent"     className="nav-btn nav-btn--rent">Rent</Link>
-            <Link to="/blog"     className="nav-btn nav-btn--blog">Blog</Link>
-            <Link to="/guides"   className="nav-btn nav-btn--guides">Guides</Link>
-            <Link to="/services" className="nav-btn nav-btn--services">Services</Link>
-            <Link to="/list"     className="nav-btn nav-btn--list">List your property</Link>
-            <Link to="/login"    className="nav-btn nav-btn--login">Login</Link>
-            <Link to="/register" className="nav-btn nav-btn--register">Register</Link>
+            <Link to="/buy" className="nav-btn nav-btn--buy">
+              Buy
+            </Link>
+            <Link to="/rent" className="nav-btn nav-btn--rent">
+              Rent
+            </Link>
+            <Link to="/blog" className="nav-btn nav-btn--blog">
+              Blog
+            </Link>
+            <Link to="/guides" className="nav-btn nav-btn--guides">
+              Guides
+            </Link>
+            <Link to="/services" className="nav-btn nav-btn--services">
+              Services
+            </Link>
+            <Link to="/list" className="nav-btn nav-btn--list">
+              List your property
+            </Link>
+            {auth?.token ? (
+              <>
+                <Link to="/dashboard" className="nav-btn nav-btn--list">Dashboard</Link>
+                <Link onClick={() => {
+                    logout();
+                    location.href = "/";
+                  }} className="nav-btn nav-btn--list">Logout</Link>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="nav-btn nav-btn--list">Login</Link>
+                <Link to="/register" className="nav-btn nav-btn--list">Register</Link>
+              </>
+            )}
           </nav>
         </div>
       </header>
