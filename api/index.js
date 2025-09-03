@@ -5,6 +5,10 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import rateLimit from "express-rate-limit";
+import jwt from "jsonwebtoken";
+import { createServer } from "http";  
+import { Server } from "socket.io";
+import socketHandler from "./config/socketHandler.js";
 
 import authRoutes from "./routes/auth.js";
 import propertyRoutes from "./routes/properties.js";
@@ -39,4 +43,33 @@ app.use("/api/auth", authRoutes);
 app.use("/api/properties", propertyRoutes);
 app.use("/api/chat", chatRoutes);
 
-app.listen(PORT, () => console.log(`🚀 API running on http://localhost:${PORT}`));
+const server = createServer(app); // 👈 wrap express in HTTP server
+
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+io.use((socket, next) => {
+  const token = socket.handshake.auth?.token; // frontend sends token via auth
+  if (!token) return next(new Error("Unauthorized"));
+
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    socket.user = user; // attach user info to socket
+    next();
+  } catch (err) {
+    next(new Error("Invalid token"));
+  }
+});
+
+// Pass io to socket handler
+socketHandler(io);
+
+// Start server
+server.listen(PORT, () =>
+  console.log(`🚀 API + Socket.io running on http://localhost:${PORT}`)
+);
