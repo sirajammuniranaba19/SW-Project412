@@ -16,7 +16,7 @@ export default function Blog() {
       author: "Liza Ahmed",
       published_date: "2025-08-14",
       content:
-        "Learn how location affects property value and what factors you should consider when choosing the perfect neighborhood.",
+        "LeaLocation is often considered the single biggest factor in real estate value. Homes close to public transportation, reputable schools, and thriving business districts usually appreciate faster. A quiet street or proximity to parks may increase desirability for families, while young professionals often prefer vibrant, walkable areas. Consider long‑term development plans in the neighborhood—upcoming infrastructure or commercial hubs can dramatically raise property value. On the flip side, being too close to noisy highways or industrial zones can lower appeal. Ultimately, location defines convenience, lifestyle, and future resale opportunitiesrn how location affects property value and what factors you should consider when choosing the perfect neighborhood.",
     },
     {
       blog_id: 3,
@@ -24,7 +24,7 @@ export default function Blog() {
       author: "Samiul Hossain",
       published_date: "2025-08-13",
       content:
-        "Financing a home purchase can be daunting. In this blog, we break down the various financing options available and help you decide which one is right for you.",
+        "FinancinFinancing a property purchase doesn’t have to be confusing if you understand your options. Traditional fixed‑rate mortgages offer stability, while adjustable‑rate loans may start cheaper but carry risk of future increases. Government‑backed loans can help first‑time buyers with lower down payments, and some banks provide special packages for professionals or expatriates. Before applying, improve your credit score and save for a down payment—it will reduce your interest rate. Compare multiple lenders and read all fine print to avoid hidden fees. Choosing the right financing method ensures you don’t overextend yourself and can manage payments comfortablyg a home purchase can be daunting. In this blog, we break down the various financing options available and help you decide which one is right for you.",
     },
     // ... add the rest of your blogs here
   ];
