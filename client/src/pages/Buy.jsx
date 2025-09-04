@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api";
 import PropertyCard from "../components/PropertyCard";
-import hero2 from "../assets/hero2.jpg"; // ✅ background image
+import hero2 from "../assets/hero6.jpg"; // ✅ background image
 
 export default function Buy() {
   const [items, setItems] = useState([]);

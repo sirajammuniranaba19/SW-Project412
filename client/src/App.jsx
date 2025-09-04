@@ -4,7 +4,6 @@ import Buy from "./pages/Buy";
 import Rent from "./pages/Rent";
 import Blog from "./pages/Blog";
 import Guides from "./pages/Guides";
-import Services from "./pages/Services";
 import ListProperty from "./pages/ListProperty";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -42,24 +41,33 @@ export default function App() {
             <Link to="/guides" className="nav-btn nav-btn--guides">
               Guides
             </Link>
-            <Link to="/services" className="nav-btn nav-btn--services">
-              Services
-            </Link>
+            {/* Removed Services link */}
             <Link to="/list" className="nav-btn nav-btn--list">
               List your property
             </Link>
             {auth?.token ? (
               <>
-                <Link to="/dashboard" className="nav-btn nav-btn--list">Dashboard</Link>
-                <Link onClick={() => {
+                <Link to="/dashboard" className="nav-btn nav-btn--list">
+                  Dashboard
+                </Link>
+                <Link
+                  onClick={() => {
                     logout();
                     location.href = "/";
-                  }} className="nav-btn nav-btn--list">Logout</Link>
+                  }}
+                  className="nav-btn nav-btn--list"
+                >
+                  Logout
+                </Link>
               </>
             ) : (
               <>
-                <Link to="/login" className="nav-btn nav-btn--list">Login</Link>
-                <Link to="/register" className="nav-btn nav-btn--list">Register</Link>
+                <Link to="/login" className="nav-btn nav-btn--list">
+                  Login
+                </Link>
+                <Link to="/register" className="nav-btn nav-btn--list">
+                  Register
+                </Link>
               </>
             )}
           </nav>
@@ -73,7 +81,6 @@ export default function App() {
         <Route path="/rent" element={<Rent />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/guides" element={<Guides />} />
-        <Route path="/services" element={<Services />} />
         <Route path="/list" element={<ListProperty />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
